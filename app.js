@@ -5,46 +5,67 @@ const express = require('express');
 const fs = require('fs');
 
 // Ejecución de Express
-const app = express;
+const app = express();
 
 // Levantando el Servidor en el puerto 3030
-app.listen(3030, () => console.log('Server running in 3030 port'));
+app.listen(3030, () => console.log('funciona en el puerto 3030'));
 
 // Leyendo y parseando (en array) el contenido de heroes.json
 const heroes = JSON.parse(fs.readFileSync(__dirname + '/data/heroes.json', 'utf-8'));
 
 // Ruta Raíz / ➝ Home
 app.get('/',(req,res) => {
-	let 
+	res.send('Ni Superman, Iron Man o La Mujer Maravilla son tan importantes cómo las y los Heroes de carne y hueso que encontrarás en este sitio. Esperamos que ellas y ellos te sirvan como	inspiración para poder cumplir tus objetivos. Recuerda: ¡nunca pares de creer enti!.')
 });
 
 // Ruta /heroes ➝ se envía todo el array y Express lo parsea para el browser como JSON :D
 app.get('/heroes', (req,res) => {
-	res.send(ACÁ_DEBERÍAMOS_ENVIAR_A_TODOS_LOS_HÉROES);
+	res.send(heroes);
 });
 
 // Ruta /heroes/n ➝ se envía el nombre y profesión del héroe solicitado
-app.get('/heroes/:id', (req,res) => {
+app.get('/heroes/detalle/:id', (req,res) => {
 	// Acá lo primero será encontrar al héroe que corresponda
-	let heroe = __¿?__;
+	let heroe = heroes.filter(heroe => {
+		return heroe.id == req.params.id
+	});
+	if(heroe[0] == undefined){
+		res.send('heroe no encontrado')
+	}else{
+		res.send('hola, mi nombre es ${heroe[0].nombre} y soy ${heore[0].profesion}')
+	}
 	
 	// Si se encuentra al héroe se envía el nombre y su profesión
 	// Si NO se encuentra se envía el mensaje de no encontrado
 });
 
 // Ruta /heroes/n/bio ➝ se envía la bio del héroe solicitado
-app.get('/heroes/:id/', (¿?) => {
+  app.get('/heroes/bio/:id/ok?', (req,res) => {
 	// Acá lo primero será encontrar al héroe que corresponda
-	let heroe = __¿?__;
+	let heroe = heroes.filter(heroes => {
+		return heroe.id == req.params.id 
+	});
+	if (heroe [0] == undefined){
+		res.send('no encontramos al heroe')
+	}else if(req.params.ok){
+		res.send('
+		Heroe: ${heroe[0].resenia}
+		reseña: ${heroe[0].resenia}')
+	}else{
+		res.send('${heroe[0].nombre} dice: lamento que no quieras saber de mi :()')
+	}
 
 	// Si NO se encuentra al héroe se envía un mensaje
 	// Si se encuentra al héroe:
 		// Se pregunta si vino el parámetro Y el valor esperado y se envía la información
 		// Si nó vino el parámetro se envía el mensaje de error
-	}
 });
-
 // Ruta Créditos
+app.get('/creditos', (req,res) => {
+	res.send({
+		nombre: 'Maria Baez'
+	})
+})
 // ¿?
 
 // Ruta... ¿Pára qué sirve esto?
